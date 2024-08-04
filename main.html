@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="function.js"></script>
+
+<body>
+    <h1>Welcome to Music Score</h1>
+    <span>Find By Name</span><input id="findscore"><br>
+    <button onclick='search()'>Looking For</button>
+    <button onclick='lastpage()'>←</button>
+    <button onclick='nextpage()'>→</button>
+    <button onclick="clearlist()">clear</button>
+    <div id="pagenumber"></div>
+    <div id="img"></div>
+    <script>
+        var scoreslist = []; //用于存储从txt文件中获取的曲谱清单
+        var tem = []; //临时文件用于获取符合条件的曲谱名字
+        var page = 0; //看到曲谱的第几页,0表示第1页
+        $.get("https://huangspro.github.io/musicscore.github.io/scores.txt", function(data) {
+            scoreslist = data.split("\n");
+            console.log(data);
+        });
+
+        function search() {
+            var name = $("#findscore").val();
+            for (const i of scoreslist) {
+                if (i.includes(name)) {
+                    tem.push("https://huangspro.github.io/musicscore.github.io/scores/" + i); //追加曲谱名字
+                }
+            }
+            if (tem.length != 0) {
+                tem = rank(tem);
+                makeimg(tem, 0); //生成曲谱阅读器,生成第1张曲谱
+            } else {
+                alert("未找到曲谱");
+            }
+        }
+        //初始化数组,防止使用记录重复
+        function clearlist() {
+            tem = [];
+        }
+    </script>
+</body>
+
+</html>
