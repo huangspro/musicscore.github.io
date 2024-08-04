@@ -7,7 +7,8 @@ on:
     paths:
       - 'scores/**'
 permissions:
-    contents: write
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +19,7 @@ jobs:
         run: |
           cd scores
           filenames=$(ls)
-          echo "$filenames" > ../scores.txt
+          echo "$filenames" > ../scores.txt  # 这里会覆盖 scores.txt 的内容
         shell: bash
 
       - name: Commit updated scores.txt
@@ -27,7 +28,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add scores.txt
           git commit -m "Update scores.txt with latest filenames" || echo "No changes to commit"
-          
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
