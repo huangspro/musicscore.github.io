@@ -6,7 +6,8 @@ on:
       - main  # 或者您希望监听的分支
     paths:
       - 'scores/**'
-
+permissions:
+    contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
