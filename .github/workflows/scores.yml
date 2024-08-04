@@ -1,0 +1,33 @@
+name: Update Scores List
+
+on:
+  push:
+    branches:
+      - main  # 或者您希望监听的分支
+    paths:
+      - 'scores/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: List files in scores directory and update scores.txt
+        run: |
+          cd scores
+          filenames=$(ls)
+          echo "$filenames" > ../scores.txt
+        shell: bash
+
+      - name: Commit updated scores.txt
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add scores.txt
+          git commit -m "Update scores.txt with latest filenames" || echo "No changes to commit"
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
