@@ -1,0 +1,9 @@
+这是一个曲谱储存网站
+①/.github/workflows
+用于github action持续更新scores.txt
+②/scores
+用于储存曲谱.jpg .png等
+③main.html
+页面文件,通过一个函数获取scores.txt中的曲谱清单,并生成看谱页面
+④function.js
+main页面依赖的js函数
